@@ -1,0 +1,88 @@
+<template>
+  <div class="page_login">
+    <div class="container flex justify-between align-center">
+      <img src="@/assets/image/login_bg.png" alt="登录" />
+
+      <div class="login_area">
+        <div class="title">登录</div>
+        <el-input
+          v-model="account"
+          placeholder="请输入用户名/手机号码"
+        ></el-input>
+        <el-input
+          v-model="password"
+          show-password
+          placeholder="请输入登录密码"
+        ></el-input>
+        <el-checkbox v-model="checked">记住用户名</el-checkbox>
+        <div><el-button type="primary" @click="login">登录</el-button></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      account: "",
+      password: "",
+      checked: false,
+    };
+  },
+  methods: {
+    //登录
+    login() {},
+  },
+};
+</script>
+
+<style lang="scss">
+.page_login {
+  .container {
+    // padding: 0 141px 0 327px;
+    // > img {
+    //   height: 548px;
+    //   width: 582px;
+    // }
+    // > .login_area {
+    //   border: white solid 1px;
+    //   background-color: white;
+    //   width: 590px;
+    //   height: 528px;
+    //    box-shadow: 0px 0px 10px rgba(32, 159, 133, 0.08);
+    //   border-radius: 10px;
+    //   padding:52px 70px;
+    padding: 0 141px 0 327px;
+    > img {
+      height: 548px;
+      width: 582px;
+    }
+    > .login_area {
+      width: 590px;
+      height: 528px;
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 0px 10px rgba(32, 159, 133, 0.08);
+      border-radius: 10px;
+      padding: 52px 70px;
+      > .title {
+        font-size: 30px;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 1);
+      }
+      > .el-input {
+        margin-top: 50px;
+      }
+      > .el-checkbox {
+        margin-top: 40px;
+      }
+      .el-button {
+        margin-top: 20px;
+        width: 450px;
+        background: rgba(32, 159, 133, 1);
+        color: white;
+      }
+    }
+  }
+}
+</style>
