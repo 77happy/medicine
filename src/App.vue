@@ -1,13 +1,11 @@
 <template>
-<div id="app">
-  <router-view></router-view>
-</div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-
-export default {
-}
+export default {};
 </script>
 <style >
 #app {
@@ -16,7 +14,24 @@ export default {
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 }
 /* 虽然上面没有body，但是页面打开f12就会出现隐藏的body */
-body{
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: 100% 100%;
   background-image: url(~@/assets/image/indexBg.png);
+}
+div{
+  box-sizing: border-box;
+}
+.flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.align-center {
+  align-items: center;
 }
 </style>

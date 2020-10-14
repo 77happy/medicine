@@ -40,28 +40,18 @@ export default {
 <style lang="scss">
 .page_login {
   .container {
-    // padding: 0 141px 0 327px;
-    // > img {
-    //   height: 548px;
-    //   width: 582px;
-    // }
-    // > .login_area {
-    //   border: white solid 1px;
-    //   background-color: white;
-    //   width: 590px;
-    //   height: 528px;
-    //    box-shadow: 0px 0px 10px rgba(32, 159, 133, 0.08);
-    //   border-radius: 10px;
-    //   padding:52px 70px;
-    padding: 0 141px 0 327px;
+    padding: 150px 141px 0 327px;
     > img {
+      margin-left: -105px;
+      margin-right: 200px;
       height: 548px;
       width: 582px;
     }
     > .login_area {
+      border: white solid 1px;
+      background-color: white;
       width: 590px;
       height: 528px;
-      background: rgba(255, 255, 255, 1);
       box-shadow: 0px 0px 10px rgba(32, 159, 133, 0.08);
       border-radius: 10px;
       padding: 52px 70px;
