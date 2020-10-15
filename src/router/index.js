@@ -2,8 +2,6 @@ import Vue from 'vue'
 //先导入路由
 import VueRouter from 'vue-router'
 
-const Login = () => import('../views/public/Login.vue')
-
 
 // 1.通过Vue.use来安装插件
 Vue.use(VueRouter)
@@ -22,8 +20,21 @@ const routes = [
     },
     {
         path: '/login',
-        component: Login
+        component: () => import('@/views/public/Login.vue')
+    },
+    {
+        path:'/index',
+        name:'index',
+        component: () => import('@/views/index/index.vue'),
+        children:[
+            {
+                // index的默认页是home
+                path:'/',
+                component:()=>import('@/views/index/home.vue')
+            }
+        ]
     }
+
 ]
 //实例化VueRouter并将routes添加进去
 // eslint-disable-next-line no-unused-vars

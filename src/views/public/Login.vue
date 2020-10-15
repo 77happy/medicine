@@ -32,7 +32,9 @@ export default {
   },
   methods: {
     //登录
-    login() {},
+    login() {
+      this.$router.push('/index')
+    }
   },
 };
 </script>
