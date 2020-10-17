@@ -8,8 +8,8 @@
 <script>
 import mytitle from '@/components/mytitle'
 export default {
-    name:"index",    
-    componets: {
+    name:"index",
+    components: {
         mytitle
     }
 }

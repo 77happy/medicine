@@ -34,4 +34,16 @@ div{
 .align-center {
   align-items: center;
 }
+.justify-around {
+  /* 中间是边缘距离的两倍 */
+  justify-content: space-around;
+}
+
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-direction{
+  flex-direction:row
+}
 </style>
