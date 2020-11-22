@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -33,7 +34,17 @@ export default {
   methods: {
     //登录
     login() {
-      this.$router.push('/index')
+      // 获取输入的账号密码，传给后台
+      // 后台判断工号类型 并返回错误或跳到主页面
+
+      // 获取输入的账号密码
+      let account = this.account
+      let password = this.password
+      // console.log(account)
+      // console.log(password)
+
+      
+      // this.$router.push('/index')
     }
   },
 };
