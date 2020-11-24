@@ -6,11 +6,11 @@
 
 <script>
 export default {
-  mounted(){
-    this.$http.get('addStudent',{name:'777',age:'18'}).then(res=>{
-      console.log(res)
-    })
-  }
+  // mounted(){
+  //   this.$http.get('addStudent',{name:'777',age:'18'}).then(res=>{
+  //     console.log(res)
+  //   })
+  // }
 };
 </script>
 <style >

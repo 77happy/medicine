@@ -6,8 +6,8 @@
       <div class="login_area">
         <div class="title">登录</div>
         <el-input
-          v-model="account"
-          placeholder="请输入用户名/手机号码"
+          v-model="cid"
+          placeholder="请输入工号"
         ></el-input>
         <el-input
           v-model="password"
@@ -22,11 +22,10 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      account: "",
+      cid: "",
       password: "",
       checked: false,
     };
@@ -38,14 +37,18 @@ export default {
       // 后台判断工号类型 并返回错误或跳到主页面
 
       // 获取输入的账号密码
-      let account = this.account
-      let password = this.password
+      let cid = this.cid;
+      let password = this.password;
       // console.log(account)
       // console.log(password)
+      // 传给后台接口
+      this.$http.post("ManageLogin", { cid: cid, password: password }).then((res) => {
+        console.log(res);
+       
+      });
 
-      
       // this.$router.push('/index')
-    }
+    },
   },
 };
 </script>
