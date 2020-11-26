@@ -5,16 +5,20 @@
 
       <div class="login_area">
         <div class="title">登录</div>
-        <el-input
-          v-model="cid"
-          placeholder="请输入工号"
-        ></el-input>
+        <el-input v-model="cid" placeholder="请输入工号"></el-input>
         <el-input
           v-model="password"
           show-password
           placeholder="请输入登录密码"
         ></el-input>
-        <el-checkbox v-model="checked">记住用户名</el-checkbox>
+        <div class="radiobut">
+          <el-radio :label="1" v-model="form.radiovalue">管理员</el-radio>
+          <el-radio :label="2" v-model="form.radiovalue">医生</el-radio>
+          <el-radio :label="3" v-model="form.radiovalue">护士</el-radio>
+          <el-radio :label="4" v-model="form.radiovalue">游客</el-radio>
+        </div>
+
+        <!-- <el-checkbox v-model="checked">记住用户名</el-checkbox> -->
         <div><el-button type="primary" @click="login">登录</el-button></div>
       </div>
     </div>
@@ -28,24 +32,39 @@ export default {
       cid: "",
       password: "",
       checked: false,
+      form: {
+        radiovalue: 1,
+      },
     };
   },
   methods: {
     //登录
     login() {
-      // 获取输入的账号密码，传给后台
-      // 后台判断工号类型 并返回错误或跳到主页面
+      // console.log(this.form.radiovalue)
+      // 判断类型
+      if (this.form.radiovalue == 1) {
+        // 获取输入的账号密码，传给后台
+        // 后台判断工号类型 并返回错误或跳到主页面
 
-      // 获取输入的账号密码
-      let cid = this.cid;
-      let password = this.password;
-      // console.log(account)
-      // console.log(password)
-      // 传给后台接口
-      this.$http.post("ManageLogin", { cid: cid, password: password }).then((res) => {
-        console.log(res);
-       
-      });
+        // 获取输入的账号密码
+        let cid = this.cid;
+        let password = this.password;
+        // console.log(account)
+        // console.log(password)
+        // 传给后台接口
+        this.$http
+          .post("ManageLogin", { cid: cid, password: password })
+          .then((res) => {
+            console.log(res);
+            if (res.code == 1) {
+              this.$router.push("/index");
+            } else {
+              alert("用户名或密码错误，请重新输入");
+            }
+          });
+      }else{
+        console.log('您选择的不是管理员')
+      }
 
       // this.$router.push('/index')
     },
@@ -83,10 +102,14 @@ export default {
         margin-top: 40px;
       }
       .el-button {
-        margin-top: 20px;
+        margin-top: 30px;
+
         width: 450px;
         background: rgba(32, 159, 133, 1);
         color: white;
+      }
+      .radiobut {
+        margin-top: 15px;
       }
     }
   }
