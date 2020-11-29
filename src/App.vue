@@ -37,6 +37,9 @@ div{
 .justify-center {
   justify-content: center;
 }
+.justify-between {
+  justify-content: space-between;
+}
 .align-center {
   align-items: center;
 }

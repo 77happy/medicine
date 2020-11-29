@@ -5,6 +5,7 @@
         class="item flex justify-center align-center"
         v-for="(item, index) in actionList"
         :key="index"
+        @click="navTo(item)"
       >
         <div class="item_content">
           <img :src="item.imgUrl" class="item_icon" />
@@ -24,9 +25,9 @@ export default {
     return {
       actionList: [
         {
-          name: "取药",
+          name: "放药",
           imgUrl: require("@/assets/image/home/quyao.png"),
-          url: "/",
+          url: "/putMed",
         },
         {
           name: "退药",
@@ -34,12 +35,12 @@ export default {
           url: "/",
         },
         {
-          name: "空安瓿管理",
+          name: "空瓶管理",
           imgUrl: require("@/assets/image/home/pingzi.png"),
           url: "/",
         },
         {
-          name: "放药",
+          name: "手术信息管理",
           imgUrl: require("@/assets/image/home/fangyao.png"),
           url: "/",
         },
@@ -49,13 +50,19 @@ export default {
           url: "/",
         },
         {
-          name: "处方单打印",
+          name: "商城管理",
           imgUrl: require("@/assets/image/home/dayin.png"),
           url: "/",
         },
       ],
     };
   },
+
+  methods:{
+    navTo(item){
+      this.$router.push(item.url)
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -85,7 +92,7 @@ export default {
       }
       > .title{
         // position: absolute; 是相对于离其最近且 带有relative属性的父辈元素
-          position: absolute;
+        position: absolute;
         left: 224px;
         height: 100%;
         width: 108px;

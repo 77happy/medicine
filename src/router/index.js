@@ -31,6 +31,11 @@ const routes = [
                 // index的默认页是home
                 path:'/',
                 component:()=>import('@/views/index/home.vue')
+            },
+            {
+                // index的默认页是home
+                path:'/putMed',
+                component:()=>import('@/views/index/Managedo/putMed.vue')
             }
         ]
     }
