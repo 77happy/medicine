@@ -59,44 +59,38 @@
       <div class="stept2">
         <div class="chosetitle">2.放置药物</div>
         <div class="content">
-          <el-table
-            :data="
-              tableData.filter(
-                (data) =>
-                  !search ||
-                  data.name.toLowerCase().includes(search.toLowerCase())
-              )
-            "
-            style="width: 100%"
-          >
-            <el-table-column label="Date" prop="date"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="Name" prop="name"> </el-table-column>
-            <el-table-column label="oparation">
+          <el-table :data="tableData" border style="width: 100%">
+            <el-table-column fixed prop="mid" label="药品编号" width="100">
+            </el-table-column>
+            <el-table-column prop="name" label="药品名称" width="100">
+            </el-table-column>
+            <el-table-column prop="province" label="规格" width="100">
+            </el-table-column>
+            <el-table-column prop="city" label="有效期" width="100">
+            </el-table-column>
+            <el-table-column prop="address" label="批号" width="100">
+            </el-table-column>
+            <el-table-column prop="zip" label="用法" width="100">
+            </el-table-column>
+            <el-table-column prop="zip" label="价格" width="100">
+            </el-table-column>
+            <el-table-column prop="zip" label="分类" width="100">
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="100"> 
               <template slot-scope="scope">
-                <div class="flex other" >
-                  <el-button
-                    size="mini"
-                    @click="handleEdit(scope.$index, scope.row)"
-                    >Edit</el-button
-                  >
-                  <el-button
-                    size="mini"
-                    type="danger"
-                    @click="handleDelete(scope.$index, scope.row)"
-                    >Delete</el-button
-                  >
-                </div>
+                <el-button
+                  @click="handleClick(scope.row)"
+                  type="text"
+                  size="small"
+                  >修改</el-button
+                >
+                <el-button type="text" size="small">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
-
-          <el-button class="add">add</el-button>
+          <div class="flex justify-center">
+            <el-button class="add">add</el-button>
+          </div>
         </div>
       </div>
     </div>
@@ -116,7 +110,9 @@ export default {
       nowDrawId: -1, //当前选中抽屉的id
       boxCheckList: [], //当前选中的盒子列
 
-      machineItemList: [], //左侧 抽屉整体布局
+      machineItemList: [
+        
+      ], //左侧 抽屉整体布局
 
       tableData: [
         {
@@ -144,10 +140,33 @@ export default {
     };
   },
   // created是组件创建的时候调用该方法 组件被创建的时候去获取药品列表 getMachineItemList 是自己写的一个方法
-  // created() {
-  // 	this.getMachineItemList();
-  // },
+  created() {
+    this.getMachineItemList()
+  },
   methods: {
+    //获取药箱布局 假设为9行*3列
+    getMachineItemList(){
+      let arr=[];
+      for(let i=0;i<9;i++){
+        //设置每一行的属性
+        let rowObj={
+          id:i+1,
+          child:[]
+        };
+        for(let j=0;j<3;j++){
+          //设置每一列的属性
+          let colObj={
+            id:(i+1)+'-'+(j+1)
+          }
+          //push为数组方法，增加一个项
+          rowObj.child.push(colObj)
+        }
+        arr.push(rowObj)
+      }
+      console.log(arr)
+      this.machineItemList=arr;
+    },
+
     //当某一列被点击后，选中该行
     toggleNowDrawId(id) {
       this.nowDrawId = id;
@@ -170,6 +189,7 @@ export default {
     height: 100%;
     > div {
       height: 740px;
+      box-sizing: border-box;
       background: rgba(255, 255, 255, 1);
       // 给div元素添加圆角的边框
       border-radius: 10px;
@@ -178,6 +198,7 @@ export default {
         font-size: 20px;
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
+        margin-bottom: 25px;
       }
       &.step1 {
         width: 363px;
@@ -235,18 +256,19 @@ export default {
         }
       }
       // &.step2 {
-      //   // background: ;
+      //   >.content{
+
+      //   // margin-top: 10px;
+      //   }
       // }
 
       .add {
         width: 70%;
         background: rgba(32, 159, 133, 1);
         color: rgba(255, 255, 255, 1);
+        margin-top: 70px;
       }
-      .other{
-        width: 200px;
-      }
-      
+     
     }
   }
 }
