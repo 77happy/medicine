@@ -7,7 +7,7 @@
         <!-- drawer_area 抽屉区 -->
         <div class="drawer_area">
           <div
-            class="row"
+            class="col"
             :class="nowDrawId == item.id ? 'active' : ''"
             v-for="(item, index) in machineItemList"
             :key="index"
@@ -18,14 +18,7 @@
               class="row_arrow el-icon-right"
               v-if="nowDrawId == item.id"
             ></div>
-            <div
-              class="col"
-              :class="{ have: item.status == '1', none: item.status == '2' }"
-              v-for="(item1, index1) in item.child"
-              :key="index1"
-            >
-              <!-- {{ item1.id }} -->
-            </div>
+            {{ item.id }}
           </div>
         </div>
 
@@ -65,17 +58,17 @@
               </el-table-column>
               <el-table-column prop="name" label="药品名称" width="100">
               </el-table-column>
-              <el-table-column prop="province" label="规格" width="100">
+              <el-table-column prop="specifications" label="规格" width="100">
               </el-table-column>
-              <el-table-column prop="city" label="有效期" width="100">
+              <el-table-column prop="term" label="有效期" width="100">
               </el-table-column>
-              <el-table-column prop="address" label="批号" width="100">
+              <el-table-column prop="batch" label="批号" width="100">
               </el-table-column>
-              <el-table-column prop="zip" label="用法" width="100">
+              <el-table-column prop="dose" label="用法" width="100">
               </el-table-column>
-              <el-table-column prop="zip" label="价格" width="100">
+              <el-table-column prop="price" label="价格" width="100">
               </el-table-column>
-              <el-table-column prop="zip" label="分类" width="100">
+              <el-table-column prop="classification" label="分类" width="100">
               </el-table-column>
               <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
@@ -85,7 +78,9 @@
                     size="small"
                     >修改</el-button
                   >
-                  <el-button type="text" size="small">删除</el-button>
+                  <el-button type="text" size="small" @click="delMed(scope.row.mid)"
+                    >删除</el-button
+                  >
                 </template>
               </el-table-column>
             </el-table>
@@ -169,28 +164,7 @@ export default {
 
       machineItemList: [], //左侧 抽屉整体布局
 
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市",
-        },
-      ],
+      tableData: [],
 
       dialogFormVisible: false,
       form: {
@@ -219,16 +193,8 @@ export default {
         //设置每一行的属性
         let rowObj = {
           id: i + 1,
-          child: [],
         };
-        for (let j = 0; j < 3; j++) {
-          //设置每一列的属性
-          let colObj = {
-            id: i + 1 + "-" + (j + 1),
-          };
-          //push为数组方法，增加一个项
-          rowObj.child.push(colObj);
-        }
+
         arr.push(rowObj);
       }
       console.log(arr);
@@ -238,6 +204,17 @@ export default {
     //当某一列被点击后，选中该行
     toggleNowDrawId(id) {
       this.nowDrawId = id;
+      // 传给后台 后台返回cabinet=id的数据，并在右侧展示
+      this.$http
+        .post("/putmed/findMed", {
+          cabinet: id,
+        })
+        .then((res) => {
+          if (res.code == 1) {
+            console.log(res.data);
+            this.tableData = res.data;
+          }
+        });
     },
 
     handleEdit(index, row) {
@@ -276,11 +253,42 @@ export default {
         .then((res) => {
           if (res.code == 1) {
             alert("新增成功！");
+            this.$http
+              .post("/putmed/findMed", {
+                cabinet: this.nowDrawId,
+              })
+              .then((res) => {
+                if (res.code == 1) {
+                  console.log(res.data);
+                  this.tableData = res.data;
+                }
+              });
           } else {
             alert("新增失败！！");
           }
 
           this.dialogFormVisible = false;
+        });
+    },
+    delMed(id) {
+      // 根据id删除
+      this.$http
+        .post("/putmed/delMed", {
+          mid: id,
+        })
+        .then((res) => {
+          if (res.code == 1) {
+            this.$http
+              .post("/putmed/findMed", {
+                cabinet: this.nowDrawId,
+              })
+              .then((res) => {
+                if (res.code == 1) {
+                  console.log(res.data);
+                  this.tableData = res.data;
+                }
+              });
+          }
         });
     },
   },
@@ -310,38 +318,17 @@ export default {
 
         //药箱列布局
         > .drawer_area {
-          .row {
-            //行布局
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            position: relative;
-            > .row_arrow {
-              display: none;
-              position: absolute;
-              left: -30px;
-              top: 10px;
+          .col {
+            width: 80%;
+            height: 44px;
+            margin-top: 10px;
+            margin-left: 30px;
+            background: rgba(231, 211, 49, 1);
+            &.have {
+              background: rgba(32, 159, 133, 1);
             }
-            &:last-child {
-              margin-bottom: 0;
-            }
-            &:hover,
-            &.active {
-              > .row_arrow {
-                display: block;
-              }
-            }
-            .col {
-              width: 88px;
-              height: 44px;
-              background: rgba(231, 211, 49, 1);
-              &.have {
-                background: rgba(32, 159, 133, 1);
-              }
-              &.none {
-                background: rgba(90, 134, 239, 1);
-              }
+            &.none {
+              background: rgba(90, 134, 239, 1);
             }
           }
         }

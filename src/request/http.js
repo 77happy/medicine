@@ -29,7 +29,7 @@ axios.interceptors.request.use(
         // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
         // const token = store.state.token;        
         // token && (config.headers.Authorization = token);        
-        console.log('我是拦截器',config)
+        // console.log('我是拦截器',config)
         return config;    
     },    
     error => {        
@@ -39,7 +39,7 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(    
     response => {        
-        console.log('我是响应拦截器',response)
+        // console.log('我是响应拦截器',response)
         // 响应拦截下的数据，可以添加自己的处理和操作，比如添加loading效果..
         if (response.status === 200) {        
             // Promise是对异步进程的封装 是一个类
