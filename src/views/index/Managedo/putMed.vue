@@ -18,7 +18,7 @@
               class="row_arrow el-icon-right"
               v-if="nowDrawId == item.id"
             ></div>
-            {{ item.id }}
+            <!-- {{ item.id }} -->
           </div>
         </div>
 
@@ -50,10 +50,17 @@
         </div>
       </div>
       <div class="stept2">
-        <div class="chosetitle">2.查看药物</div>
+        <div class="flex">
+          <div class="chosetitle">2.查看药物</div>
+
+          <el-button class="add" @click="dialogFormVisible = true"
+            >add</el-button
+          >
+        </div>
+
         <div>
-          <div class="content">
-            <el-table :data="tableData" border style="width: 100%">
+          <div class="content" style="margin-top: 20px">
+            <el-table :data="showList" border style="width: 100%">
               <el-table-column prop="mid" label="药品编号" width="100">
               </el-table-column>
               <el-table-column prop="name" label="药品名称" width="100">
@@ -73,12 +80,16 @@
               <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
                   <el-button
-                    @click="handleClick(scope.row)"
+                    @click="modMed((scope.row.mid))"
                     type="text"
-                    size="small"
+                    size="small" 
+                  
                     >修改</el-button
                   >
-                  <el-button type="text" size="small" @click="delMed(scope.row.mid)"
+                  <el-button
+                    type="text"
+                    size="small"
+                    @click="delMed(scope.row.mid)"
                     >删除</el-button
                   >
                 </template>
@@ -86,11 +97,20 @@
             </el-table>
           </div>
         </div>
-
-        <div class="flex justify-center">
-          <el-button class="add" @click="dialogFormVisible = true"
-            >add</el-button
-          >
+        <!-- 分页 -->
+        <div class="flex justify-center page">
+          
+          <div class="block" style="margin-top: 20px">
+            <!-- <span class="demonstration">大于 7 页时的效果</span> -->
+            <el-pagination
+              layout="prev, pager, next"
+              :total="tableData.length"
+              :page-size="pagesize"
+              @current-change="current_change"
+              :current-page.sync="currentPage"
+            >
+            </el-pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -146,6 +166,60 @@
         <el-button type="primary" @click="addMed">确 定</el-button>
       </div>
     </el-dialog>
+
+<el-dialog title="修改药品" :visible.sync="dialogFormVisible" width="30%">
+      <div class="flex justify-center">
+        <el-form :model="form" label-width="80px">
+          <el-form-item label="药品编号" :label-width="formLabelWidth">
+            <el-input v-model="form.mid" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="药品名称" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="药品规格" :label-width="formLabelWidth">
+            <el-input
+              v-model="form.specifications"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item label="有效期" :label-width="formLabelWidth">
+            <el-input v-model="form.term" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="批号" :label-width="formLabelWidth">
+            <el-input v-model="form.batch" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="服用说明" :label-width="formLabelWidth">
+            <el-input v-model="form.dose" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="价格" :label-width="formLabelWidth">
+            <el-input v-model="form.price" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item label="分类" :label-width="formLabelWidth">
+            <el-input
+              v-model="form.classification"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item label="抽屉" :label-width="formLabelWidth">
+            <el-input v-model="form.cabinet" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addMed">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -179,11 +253,22 @@ export default {
         cabinet: "",
       },
       formLabelWidth: "70px",
+
+      pagesize: 7, //每页多少数据
+      currentPage: 1, //默认当前页为第一页
     };
   },
   // created是组件创建的时候调用该方法 组件被创建的时候去获取药品列表 getMachineItemList 是自己写的一个方法
   created() {
     this.getMachineItemList();
+  },
+  computed:{
+    //根据当前页码所展示的数据
+    showList(){
+      
+      //slice为数组一个方法，结果是从已有数组返回指定位置的数组，参数为起始下标和结束下标
+      return this.tableData.slice((this.currentPage-1)*this.pagesize,this.currentPage-1+this.pagesize)
+    }
   },
   methods: {
     //获取药箱布局 假设为9行*3列
@@ -211,18 +296,16 @@ export default {
         })
         .then((res) => {
           if (res.code == 1) {
-            console.log(res.data);
+            console.log(res.data,'findMed');
             this.tableData = res.data;
           }
         });
     },
 
-    handleEdit(index, row) {
-      console.log(index, row);
+    modMed(id) {
+      
     },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
+
 
     addMed() {
       let mid = this.form.mid;
@@ -290,6 +373,10 @@ export default {
               });
           }
         });
+    },
+    current_change(currentPage) {
+      //改变当前页
+      this.currentPage = currentPage;
     },
   },
 };
@@ -370,16 +457,12 @@ export default {
           }
         }
       }
-      // &.step2 {
-      //   >.content{
-      //   }
-      // }
 
       .add {
-        width: 70%;
+        // width: 70%;
         background: rgba(32, 159, 133, 1);
         color: rgba(255, 255, 255, 1);
-        margin-top: 70px;
+        margin-left: 800px;
       }
     }
   }

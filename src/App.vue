@@ -43,6 +43,12 @@ div{
 .align-center {
   align-items: center;
 }
+.align-left {
+  align-items: flex-start;
+}
+.align-right {
+  align-items: flex-end;
+}
 .justify-around {
   /* 中间是边缘距离的两倍 */
   justify-content: space-around;
