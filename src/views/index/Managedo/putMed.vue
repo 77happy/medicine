@@ -53,7 +53,7 @@
         <div class="flex">
           <div class="chosetitle">2.查看药物</div>
 
-          <el-button class="add" @click="dialogFormVisible = true"
+          <el-button class="add" @click="add"
             >add</el-button
           >
         </div>
@@ -79,11 +79,7 @@
               </el-table-column>
               <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
-                  <el-button
-                    @click="modMed((scope.row.mid))"
-                    type="text"
-                    size="small" 
-                  
+                  <el-button type="text" size="small" @click="update(scope.row)"
                     >修改</el-button
                   >
                   <el-button
@@ -99,7 +95,6 @@
         </div>
         <!-- 分页 -->
         <div class="flex justify-center page">
-          
           <div class="block" style="margin-top: 20px">
             <!-- <span class="demonstration">大于 7 页时的效果</span> -->
             <el-pagination
@@ -167,13 +162,9 @@
       </div>
     </el-dialog>
 
-<el-dialog title="修改药品" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="修改药品" :visible.sync="updateFormVisible" width="30%">
       <div class="flex justify-center">
         <el-form :model="form" label-width="80px">
-          <el-form-item label="药品编号" :label-width="formLabelWidth">
-            <el-input v-model="form.mid" autocomplete="off"></el-input>
-          </el-form-item>
-
           <el-form-item label="药品名称" :label-width="formLabelWidth">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
@@ -215,11 +206,10 @@
       </div>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addMed">确 定</el-button>
+        <el-button @click="updateFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="modMed">确 定</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -241,6 +231,8 @@ export default {
       tableData: [],
 
       dialogFormVisible: false,
+      updateFormVisible: false, //'修改'功能的弹窗开关
+
       form: {
         mid: "",
         name: "",
@@ -262,16 +254,18 @@ export default {
   created() {
     this.getMachineItemList();
   },
-  computed:{
+  computed: {
     //根据当前页码所展示的数据
-    showList(){
-      
+    showList() {
       //slice为数组一个方法，结果是从已有数组返回指定位置的数组，参数为起始下标和结束下标
-      return this.tableData.slice((this.currentPage-1)*this.pagesize,this.currentPage-1+this.pagesize)
-    }
+      return this.tableData.slice(
+        (this.currentPage - 1) * this.pagesize,
+        this.currentPage - 1 + this.pagesize
+      );
+    },
   },
   methods: {
-    //获取药箱布局 假设为9行*3列
+    //获取药箱布局 假设为9行*1列
     getMachineItemList() {
       let arr = [];
       for (let i = 0; i < 9; i++) {
@@ -290,69 +284,73 @@ export default {
     toggleNowDrawId(id) {
       this.nowDrawId = id;
       // 传给后台 后台返回cabinet=id的数据，并在右侧展示
+      this.findMed();
+    },
+    // 查询显示所有药品
+    findMed() {
       this.$http
         .post("/putmed/findMed", {
-          cabinet: id,
+          cabinet: this.nowDrawId,
         })
         .then((res) => {
           if (res.code == 1) {
-            console.log(res.data,'findMed');
+            // console.log(res.data, "findMed");
             this.tableData = res.data;
           }
         });
     },
+    // 修改所点击那行的药品信息
+    modMed() {
+      this.$http.post("/putmed/modifyMed", this.form).then((res) => {
+        if (res.code == 1) {
+          alert("修改成功！");
+          this.findMed();
+        } else {
+          alert("修改失败！！");
+        }
 
-    modMed(id) {
-      
+        this.updateFormVisible = false;
+      });
     },
-
-
+      // 新增药品
     addMed() {
-      let mid = this.form.mid;
-      let name = this.form.name;
-      let dose = this.form.dose;
-      let price = this.form.price;
-      let classification = this.form.classification;
-      let cabinet = this.form.cabinet;
-      let specifications = this.form.specifications;
-      let batch = this.form.batch;
-      let term = this.form.term;
-
-      // console.log(mid)
-      // console.log(name)
       // 传给后台接口
-      this.$http
-        .get("/putmed/putMedicine", {
-          mid: mid,
-          name: name,
-          dose: dose,
-          price: price,
-          classification: classification,
-          cabinet: cabinet,
-          specifications: specifications,
-          batch: batch,
-          term: term,
-        })
-        .then((res) => {
-          if (res.code == 1) {
-            alert("新增成功！");
-            this.$http
-              .post("/putmed/findMed", {
-                cabinet: this.nowDrawId,
-              })
-              .then((res) => {
-                if (res.code == 1) {
-                  console.log(res.data);
-                  this.tableData = res.data;
-                }
-              });
-          } else {
-            alert("新增失败！！");
-          }
+      this.$http.get("/putmed/putMedicine", this.form).then((res) => {
+        if (res.code == 1) {
+          alert("新增成功！");
+          this.findMed();
+        } else {
+          alert("新增失败！！");
+        }
 
-          this.dialogFormVisible = false;
-        });
+        this.dialogFormVisible = false;
+      });
     },
+    //点击add按钮 初始化表格
+    add(){
+      this.form = {
+        mid: "",
+        name: "",
+        specifications: "",
+        term: "",
+        batch: "",
+        dose: "",
+        price: "",
+        classification: "",
+        cabinet: "",
+      };
+
+      this.dialogFormVisible  = true;
+    },
+    //点击每一行修改按钮
+    update(data) {
+      // console.log(data)
+      //把该行药品的值直接赋给form
+      this.form = data;
+
+      this.updateFormVisible = true;
+    },
+    // 删除药品信息 单行
     delMed(id) {
       // 根据id删除
       this.$http
@@ -361,16 +359,7 @@ export default {
         })
         .then((res) => {
           if (res.code == 1) {
-            this.$http
-              .post("/putmed/findMed", {
-                cabinet: this.nowDrawId,
-              })
-              .then((res) => {
-                if (res.code == 1) {
-                  console.log(res.data);
-                  this.tableData = res.data;
-                }
-              });
+            this.findMed();
           }
         });
     },
