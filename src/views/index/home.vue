@@ -25,7 +25,7 @@ export default {
     return {
       actionList: [
         {
-          name: "放药",
+          name: "药品管理",
           imgUrl: require("@/assets/image/home/quyao.png"),
           url: "/putMed",
         },

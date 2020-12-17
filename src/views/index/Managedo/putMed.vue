@@ -8,17 +8,18 @@
         <div class="drawer_area">
           <div
             class="col"
-            :class="nowDrawId == item.id ? 'active' : ''"
+            :class="{ have: item.nowNum>0, none: item.nowNum == 0 }"
             v-for="(item, index) in machineItemList"
             :key="index"
-            @click="toggleNowDrawId(item.id)"
+            @click="toggleNowDrawId(item.cid)"
           >
             <!-- 选中了某一行时显示右箭头 -->
             <div
               class="row_arrow el-icon-right"
-              v-if="nowDrawId == item.id"
+              v-if="nowDrawId == item.cid"
             ></div>
-            <!-- {{ item.id }} -->
+             <!-- item.nowNum 为当前抽屉的药品数量 -->
+            <!-- {{ item.nowNum+'/'+item.num }} -->
           </div>
         </div>
 
@@ -35,10 +36,10 @@
             <span>无药品</span>
           </div>
 
-          <div class="item flex align-center">
+          <!-- <div class="item flex align-center">
             <div class=""></div>
             <span>无盒子</span>
-          </div>
+          </div> -->
         </div>
 
         <div class="button flex align-center justify-between">
@@ -53,9 +54,7 @@
         <div class="flex">
           <div class="chosetitle">2.查看药物</div>
 
-          <el-button class="add" @click="add"
-            >add</el-button
-          >
+          <el-button class="add" @click="add">add</el-button>
         </div>
 
         <div>
@@ -227,7 +226,7 @@ export default {
       boxCheckList: [], //当前选中的盒子列
 
       machineItemList: [], //左侧 抽屉整体布局
-
+      status: 0,
       tableData: [],
 
       dialogFormVisible: false,
@@ -252,7 +251,8 @@ export default {
   },
   // created是组件创建的时候调用该方法 组件被创建的时候去获取药品列表 getMachineItemList 是自己写的一个方法
   created() {
-    this.getMachineItemList();
+   
+    this.findCab();
   },
   computed: {
     //根据当前页码所展示的数据
@@ -265,7 +265,7 @@ export default {
     },
   },
   methods: {
-    //获取药箱布局 假设为9行*1列
+    //获取药箱布局 假设为9行*1列  这个可以弃用了~我还以为这个是拿药品列表
     getMachineItemList() {
       let arr = [];
       for (let i = 0; i < 9; i++) {
@@ -312,12 +312,13 @@ export default {
         this.updateFormVisible = false;
       });
     },
-      // 新增药品
+    // 新增药品
     addMed() {
       // 传给后台接口
       this.$http.get("/putmed/putMedicine", this.form).then((res) => {
         if (res.code == 1) {
           alert("新增成功！");
+          this.findCab();
           this.findMed();
         } else {
           alert("新增失败！！");
@@ -327,7 +328,7 @@ export default {
       });
     },
     //点击add按钮 初始化表格
-    add(){
+    add() {
       this.form = {
         mid: "",
         name: "",
@@ -340,7 +341,7 @@ export default {
         cabinet: "",
       };
 
-      this.dialogFormVisible  = true;
+      this.dialogFormVisible = true;
     },
     //点击每一行修改按钮
     update(data) {
@@ -359,6 +360,7 @@ export default {
         })
         .then((res) => {
           if (res.code == 1) {
+             this.findCab();
             this.findMed();
           }
         });
@@ -366,6 +368,17 @@ export default {
     current_change(currentPage) {
       //改变当前页
       this.currentPage = currentPage;
+    },
+
+    //抽屉内药品数量
+    findCab() {
+      let cabinetList = [];
+      this.$http.post("/putmed/findCab").then((res) => {
+        if (res.code == 1) {
+          console.log(res.data)
+           this.machineItemList=res.data;
+        }
+      });
     },
   },
 };
