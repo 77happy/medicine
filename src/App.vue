@@ -54,7 +54,9 @@ div{
   justify-content: space-around;
 }
 
-
+.justify-event{
+  justify-content: space-evenly;
+}
 .flex-wrap {
   flex-wrap: wrap;
 }

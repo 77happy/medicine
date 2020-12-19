@@ -62,11 +62,19 @@ export default {
               alert("用户名或密码错误，请重新输入");
             }
           });
-      }else{
-        console.log('您选择的不是管理员')
-      }
-
-      // this.$router.push('/index')
+      } 
+      //医生登录
+      if (this.form.radiovalue == 2) {
+        let did = this.did;
+        let password = this.password;
+        this.$http.post("DocotorLogin", { did, password }).then((res) => {
+          if (res.code == 1) {
+              this.$router.push("/docotor");
+            } else {
+              alert("用户名或密码错误，请重新输入");
+            }
+          });
+      } 
     },
   },
 };

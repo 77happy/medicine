@@ -7,7 +7,7 @@
       </div>
 
       <div class="flex align-center">
-        <img src="@/assets/image/title/touxiang.png" alt="管理员" />你好，管理员
+        <img src="@/assets/image/title/touxiang.png" alt="" /> 你好
       </div>
 
       <div class="flex align-center">2020/10/16 星期四 10:04</div>

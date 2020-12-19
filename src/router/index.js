@@ -23,19 +23,36 @@ const routes = [
         component: () => import('@/views/public/Login.vue')
     },
     {
-        path:'/index',
-        name:'index',
+        path: '/index',
+        name: 'index',
         component: () => import('@/views/index/index.vue'),
-        children:[
+        children: [
             {
                 // index的默认页是home
-                path:'/',
-                component:()=>import('@/views/index/home.vue')
+                path: '/',
+                component: () => import('@/views/index/home.vue')
             },
             {
                 // index的默认页是home
-                path:'/putMed',
-                component:()=>import('@/views/index/Managedo/putMed.vue')
+                path: '/putMed',
+                component: () => import('@/views/index/Managedo/putMed.vue')
+            }
+        ]
+    },
+    {
+        // 医生
+        path: '/docotor',
+        component: () => import('@/views/index/index.vue'),
+        children:[
+            {
+                // docotor的默认页是home
+                path: '/',
+                component: () => import('@/views/index/docotorHome.vue')
+            },
+            {
+                
+                path: '/prescribing',
+                component: () => import('@/views/index/Docotordo/prescribing.vue')
             }
         ]
     }
