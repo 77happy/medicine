@@ -1,44 +1,54 @@
 <template>
   <div class="flex flex-wrap page_home">
-
     <div class="flex align-center justify-center diagnosis">
-      <div class="dia flex align-center justify-center">
-        <span>诊断病人</span>
-        <div>
-          <el-switch
-            v-model="value"
-            active-color="#13ce66"
-            inactive-color="#ff4949"
-          >
-          </el-switch>
-        </div>
-      </div>
+      <div class="test flex">
+        <div class="test_content">
+          <div class="dia flex align-center justify-center">
+            <span>诊断病人</span>
+            <div>
+              <el-switch
+                v-model="value"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+              >
+              </el-switch>
+            </div>
+          </div>
 
-      <div class="count flex align-center justify-center">
-        <span>当前共计诊断人数：2人</span>
+          <div class="count flex align-center justify-center">
+            <span>当前共计诊断人数：2人</span>
+          </div>
+        </div>
+
+        <div
+          class="fluorcesence fluorcesence-filter"
+          :style="{ background: background }"
+        ></div>
+        <div
+          class="fluorcesence fluorcesence-border"
+          :style="{ background: background }"
+        ></div>
       </div>
     </div>
-    <div class="flex justify-center flex-wrap">
-      <div
-        class="item flex align-center"
-        v-for="(item, index) in actionList"
-        :key="index"
-        @click="navTo(item)"
-      >
-        <div class="item_content">
-          <img :src="item.imgUrl" class="item_icon" />
-          <div class="title title flex justify-center align-center">
-            {{ item.name }}
+
+    <div class="flex justify-center items">
+      <div class="flex justify-center flex-wrap">
+        <div
+          class="item flex align-center"
+          v-for="(item, index) in actionList"
+          :key="index"
+          @click="navTo(item)"
+        >
+          <div class="item_content">
+            <img :src="item.imgUrl" class="item_icon" />
+            <div class="title title flex justify-center align-center">
+              {{ item.name }}
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-
-
-    
   </div>
-  
 </template>
 
 <script>
@@ -80,12 +90,30 @@ export default {
         // },
       ],
       value: true,
+      angle: 235,
+      background: "linear-gradient(235deg, #89ff00, #6286EF, #00bcd4);",
+      timer: 0,
     };
   },
-
+  created() {
+    this.rotate();
+  },
   methods: {
     navTo(item) {
       this.$router.push(item.url);
+    },
+    // 旋转
+    rotate() {
+      var that = this;
+      this.timer = setInterval(() => {
+        that.angle++;
+        that.background =
+          "linear-gradient(" + that.angle + "deg,#89ff00,#6286EF,#00bcd4)";
+        if (that.angle == 595) {
+          that.angle = 235;
+        }
+        // console.log(that.angle,that.background)
+      }, 10);
     },
   },
 };
@@ -96,19 +124,64 @@ export default {
   .diagnosis {
     width: 100%;
     height: 50%;
-    > .count {
-      margin-left: 400px;
-       width: 380px;
+
+    > .test {
+      width: 45%;
       height: 150px;
       background-color: white;
       border-radius: 24px;
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .fluorcesence {
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+
+        border-radius: 24px;
+        overflow: hidden;
+      }
+      .fluorcesence-filter {
+        z-index: -1;
+      }
+      .fluorcesence-filter {
+        z-index: -2;
+        filter: blur(40px);
+      }
     }
-    > .dia {
+
+    .test_content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1;
+      background: rgb(242, 247, 241);
+      width: 99.7%;
+      height: 99.5%;
+      border-radius: 24px;
+
+      font-size: 28px;
+      color: rgba(28,127,104, 1);
+      
+    }
+    .count {
+      width: 380px;
+      height: 150px;
+    }
+    .dia {
       width: 180px;
       height: 150px;
-      background-color: white;
-      border-radius: 24px;
     }
+  }
+
+  .items {
+    width: 100%;
+    height: 500px;
+    margin-top: -150px;
   }
 
   .item {

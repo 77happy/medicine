@@ -7,7 +7,7 @@
       </div>
 
       <div class="flex align-center">
-        <img src="@/assets/image/title/touxiang.png" alt="" /> 你好
+        <img src="@/assets/image/title/touxiang.png" alt="" @click="personal" style="cursor : pointer"/> 你好
       </div>
 
       <div class="flex align-center">2020/10/16 星期四 10:04</div>
@@ -29,6 +29,10 @@ export default {
     back() {
       this.$router.go(-1);
     },
+    //个人中心
+    personal(){
+      this.$router.push("/personal")
+    }
   },
 };
 </script>

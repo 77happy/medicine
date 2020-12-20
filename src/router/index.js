@@ -22,6 +22,11 @@ const routes = [
         path: '/login',
         component: () => import('@/views/public/Login.vue')
     },
+    // 个人中心
+    {
+        path:'/personal',
+        component:()=>import('@/components/personal.vue')
+    },
     {
         path: '/index',
         name: 'index',
