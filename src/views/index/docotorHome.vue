@@ -10,13 +10,14 @@
                 v-model="value"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
+                @change="switchChange"
               >
               </el-switch>
             </div>
           </div>
 
           <div class="count flex align-center justify-center">
-            <span>当前共计诊断人数：2人</span>
+            <span>当前共计诊断人数：{{num}}人</span>
           </div>
         </div>
 
@@ -56,6 +57,7 @@ export default {
   name: "home",
   data() {
     return {
+      num:0,
       actionList: [
         {
           name:
@@ -99,6 +101,14 @@ export default {
     this.rotate();
   },
   methods: {
+
+    switchChange(e){
+      // console.log(e)
+      if(e==true){
+        this.num++
+      }
+    },
+
     navTo(item) {
       this.$router.push(item.url);
     },

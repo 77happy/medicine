@@ -1,14 +1,17 @@
 <template>
+
   <div class="flex justify-center align-center">
-    <div class="flex mainpage justify-center align-center">
-      <div class="portrait flex justify-center align-center">
+    <div class=" mainpage ">
+      <div class="portrait ">
         <div>
           <el-carousel :interval="5000" arrow="always">
             <el-carousel-item v-for="item in 4" :key="item">
-              <h3>{{ item }}</h3>
+              <!-- <h3>{{ item }}</h3> -->
             </el-carousel-item>
           </el-carousel>
         </div>
+
+
       </div>
     </div>
   </div>
