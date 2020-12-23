@@ -91,7 +91,7 @@ export default {
         //   url: "/",
         // },
       ],
-      value: true,
+      value: false,
       angle: 235,
       background: "linear-gradient(235deg, #89ff00, #6286EF, #00bcd4);",
       timer: 0,
