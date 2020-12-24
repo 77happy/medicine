@@ -206,7 +206,7 @@ export default {
 .mainpage {
   width: 70%;
   height: 700px;
-  margin: 450px auto 0;
+  margin: 400px auto 0;
   .preHead {
     width: 100%;
     // height: 350px;

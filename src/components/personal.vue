@@ -6,8 +6,11 @@
         <!-- 走马灯 -->
         <div class="lantern">
           <el-carousel :interval="5000" arrow="always">
-            <el-carousel-item v-for="item in 4" :key="item">
-              <!-- <h3>{{ item }}</h3> -->
+            <el-carousel-item>
+              <img src="@/assets/image/personal/9.png" alt="" />
+            </el-carousel-item>
+            <el-carousel-item>
+              <img src="@/assets/image/personal/22.jpg" alt="" />
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -31,7 +34,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- 主体 -->
       <div class="personBody">
         <!-- 导航栏 -->
@@ -42,7 +45,7 @@
             mode="horizontal"
             @select="handleSelect"
           >
-            <div class="flex justify-between ">
+            <div class="flex justify-between">
               <el-menu-item index="1">我的文章</el-menu-item>
               <el-submenu index="2">
                 <template slot="title">随便逛逛</template>
@@ -61,6 +64,61 @@
             </div>
           </el-menu>
         </div>
+
+        <!-- 主体部分 -->
+        <div
+          class="flex justify-between align-center perLitAva"
+          style="height: 40px"
+        >
+          <el-checkbox v-model="checked">只看原创</el-checkbox>
+
+          <div>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>正序</el-dropdown-item>
+                <el-dropdown-item>倒序</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </div>
+        <el-divider></el-divider>
+        <div class="perArt">
+          <!-- 标题 -->
+          <div class="perArtTitle">胃不好吃什么？</div>
+
+          <!-- 内容 -->
+          <div class="perArtCont">
+            胃不好的人平时应该吃容易消化的食物，比如说馒头、面条、稀饭、软米饭或者是一些容易消化的蔬菜等。胃不好的人不要吃高糖食物和高脂食物。胃不好应该吃软饭。
+          </div>
+          <!-- 标注 -->
+          <div class="perArtPs">2020年12月24日15:54:15</div>
+        </div>
+        <div class="perArt">
+          <!-- 标题 -->
+          <div class="perArtTitle">胃不好吃什么？</div>
+
+          <!-- 内容 -->
+          <div class="perArtCont">
+            胃不好的人平时应该吃容易消化的食物，比如说馒头、面条、稀饭、软米饭或者是一些容易消化的蔬菜等。胃不好的人不要吃高糖食物和高脂食物。胃不好应该吃软饭。
+          </div>
+          <!-- 标注 -->
+          <div class="perArtPs">2020年12月24日15:54:15</div>
+        </div>
+
+        <div class="perArt">
+          <!-- 标题 -->
+          <div class="perArtTitle">胃不好吃什么？</div>
+
+          <!-- 内容 -->
+          <div class="perArtCont">
+            胃不好的人平时应该吃容易消化的食物，比如说馒头、面条、稀饭、软米饭或者是一些容易消化的蔬菜等。胃不好的人不要吃高糖食物和高脂食物。胃不好应该吃软饭。
+          </div>
+          <!-- 标注 -->
+          <div class="perArtPs">2020年12月24日15:54:15</div>
+        </div>
       </div>
     </div>
   </div>
@@ -72,6 +130,7 @@ export default {
     return {
       activeIndex: "1",
       activeIndex2: "1",
+      checked: true,
     };
   },
   methods: {
@@ -113,8 +172,38 @@ export default {
       }
     }
   }
+  .personBody {
+    > .perLitAva {
+      margin-bottom: -20px;
+    }
+    > .perArt {
+      width: 100%;
+      height: 140px;
+      // border: rgb(193, 212, 193) solid 1px;
+      // margin-top: 35px;
+      >.perArtTitle{
+        color: rgb(31, 129, 110);
+        font-size: 18px;
+        font-weight: 600;
+        margin: 5px 0 15px 10px;
+      }
+      >.perArtCont{
+        margin:  5px 0 15px 5px;
+        color: rgb(44, 43, 43);
+      }
+      >.perArtPs{
+        
+        margin:  5px 0 15px 5px;
+        color: rgb(83, 82, 82);
+      }
+    }
+  }
+
   .el-submenu__title {
-    font-size: 24px;
+    font-size: 18px;
+  }
+  .el-menu-item {
+    font-size: 18px;
   }
   .el-carousel__item h3 {
     color: #475669;
@@ -131,8 +220,12 @@ export default {
   .el-carousel__item:nth-child(2n + 1) {
     background-color: #d3dce6;
   }
-  .el-menu-item{
-    font-size: 24px;
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409eff;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
   }
 }
 </style>
