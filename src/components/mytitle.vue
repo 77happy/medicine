@@ -3,7 +3,7 @@
     <div class="content flex justify-around">
       <div class="bg"></div>
       <div class="flex notice align-center">
-        <img src="@/assets/image/title/tixing.png" alt="提醒" />
+        <img src="@/assets/image/title/tixing.png" alt="提醒" @click="message"  style="cursor : pointer"/>
       </div>
 
       <div class="flex align-center">
@@ -32,6 +32,9 @@ export default {
     //个人中心
     personal(){
       this.$router.push("/personal")
+    },
+     message(){
+      this.$router.push("/message")
     }
   },
 };

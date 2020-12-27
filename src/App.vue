@@ -40,6 +40,10 @@ div{
 .justify-between {
   justify-content: space-between;
 }
+
+.justify-event{
+  justify-content: space-evenly;
+}
 .align-center {
   align-items: center;
 }
@@ -54,9 +58,6 @@ div{
   justify-content: space-around;
 }
 
-.justify-event{
-  justify-content: space-evenly;
-}
 .flex-wrap {
   flex-wrap: wrap;
 }

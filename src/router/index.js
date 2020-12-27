@@ -27,6 +27,11 @@ const routes = [
         path:'/personal',
         component:()=>import('@/components/personal.vue')
     },
+    //消息
+    {
+        path:'/message',
+        component:()=>import('@/components/message.vue')
+    },
     {
         path: '/index',
         name: 'index',
