@@ -80,6 +80,10 @@
       </div>
       <div class="chatBox chatBox-left checkall">你好</div>
       <!-- <el-divider></el-divider> -->
+
+
+      <!-- 底部输入框 -->
+      <el-input  placeholder="请输入内容" class="chatInput"></el-input>
     </div>
   </div>
 </template>
@@ -152,6 +156,9 @@ export default {};
     }
     .checkall{
         margin-left: 60px;
+    }
+    .chatInput{
+      width: 80%;
     }
 }
 </style>
