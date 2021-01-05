@@ -1,4 +1,5 @@
 <template>
+
   <div class="flex justify-center align-center">
     <div class="personPage">
       <!-- 走马灯和头像 -->
