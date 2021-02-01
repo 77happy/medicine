@@ -68,7 +68,7 @@ export default {
         {
           name: "手术规划",
           imgUrl: require("@/assets/image/home/tuiyao.png"),
-          url: "/",
+          url: "/operation",
         },
         // {
         //   name: "药品",

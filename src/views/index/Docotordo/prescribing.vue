@@ -300,10 +300,7 @@ export default {
     // height: 350px;
     padding: 50px;
     background: white;
-    h1 {
-      color: rgb(31, 129, 110);
-      margin-bottom: 80px;
-    }
+   
     h2 {
       color: rgb(31, 129, 110);
     }

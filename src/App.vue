@@ -28,7 +28,7 @@ body {
   background-size: 100% 100%;
   background-image: url(~@/assets/image/indexBg.png);
 }
-div{
+div {
   box-sizing: border-box;
 }
 .flex {
@@ -41,7 +41,7 @@ div{
   justify-content: space-between;
 }
 
-.justify-event{
+.justify-event {
   justify-content: space-evenly;
 }
 .align-center {
@@ -61,7 +61,11 @@ div{
 .flex-wrap {
   flex-wrap: wrap;
 }
-.flex-direction{
-  flex-direction:row
+.flex-direction {
+  flex-direction: row;
+}
+h1 {
+  color: rgb(31, 129, 110);
+  margin-bottom: 80px;
 }
 </style>
