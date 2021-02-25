@@ -74,11 +74,11 @@ export default {
         //   name: "药品",
         //   imgUrl: require("@/assets/image/home/pingzi.png"),
         //   url: "/",
-        // },
+        // // },
         // {
         //   name: "手术信息管理",
         //   imgUrl: require("@/assets/image/home/fangyao.png"),
-        //   url: "/",
+        //   url: "/operMan",
         // },
         // {
         //   name: "库存",

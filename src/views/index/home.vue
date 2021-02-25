@@ -42,7 +42,7 @@ export default {
         {
           name: "手术信息管理",
           imgUrl: require("@/assets/image/home/fangyao.png"),
-          url: "/",
+          url: "/operMan",
         },
         {
           name: "库存",

@@ -105,9 +105,10 @@ export default {
       border-bottom: 64px solid #209f85;
       //   通过设置不同边的透明效果，可以制作出三角形,宽度和高度要设置为0。
       border-left: 60px solid transparent;
+      z-index: 1000;
     }
     > div {
-      z-index: 1;
+      z-index: 1001;
       img {
         width: 30px;
         height: 30px;

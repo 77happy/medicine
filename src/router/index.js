@@ -38,6 +38,7 @@ const routes = [
         {
             path: '/index',
             name: 'index',
+            // 管理员操作
             component: () =>
                 import ('@/views/index/index.vue'),
             children: [{
@@ -51,6 +52,12 @@ const routes = [
                     path: '/putMed',
                     component: () =>
                         import ('@/views/index/Managedo/putMed.vue')
+                },
+                {
+                    // index的默认页是home
+                    path: '/operMan',
+                    component: () =>
+                        import ('@/views/index/Managedo/operMan.vue')
                 }
             ]
         },
